@@ -18,6 +18,11 @@ public class Wordle {
     private int attempts;
     private String[][] keyboard;
 
+    /*
+        Constructor, intializes answer to a random valid answer in the answer list from randWord
+        Initializes attempts to 0
+        Initializes keyboard to the letters found on a QWERTY keyboard
+     */
     public Wordle() throws FileNotFoundException {
         answer = randWord.getAnswer().toUpperCase();
         attempts = 0;
@@ -28,14 +33,17 @@ public class Wordle {
         };
     }
 
+    //returns the answer
     public String getAnswer() {
         return answer;
     }
 
+    //returns the current amount of attempts
     public int getAttempts(){
         return attempts;
     }
 
+    //Prints out the instructions to wordle based on if the user wants them or not
     public void printHeader(){
         Scanner sc = new Scanner(System.in);
         System.out.println("Welcome to Wordle! Would you like instructions? (yes or no)");
@@ -93,6 +101,13 @@ public class Wordle {
         return randWord.wordSearch(VALID_GUESSES, str, start, last) != -1;
     }
 
+    /*
+    Returns "Guess is invalid" if the word is not in the list of valid words
+    Returns "You are out of attempts, when attempts = 6
+    Returns "Correct" is str equals answer
+
+    If none of the above correct, run setKeyboard and print the keyboard, then return the colored string by calling the buildString method
+     */
     public String makeGuess(String str){
 
         if(!isValidGuess(str)){
@@ -110,6 +125,9 @@ public class Wordle {
         return buildString(str);
     }
 
+    /*
+    Runs the actual world game, uses a while loop to run the game while under the max attempts and checkWin is false
+     */
     public void playGame(){
         Scanner input = new Scanner(System.in);
         printHeader();
@@ -126,6 +144,7 @@ public class Wordle {
         }
     }
 
+    //Logic shown line by line
     public void setKeyboard(String str){
 
             for(int i = 0; i < str.length(); i++){
@@ -137,16 +156,17 @@ public class Wordle {
                 for(int j = 0; j < keyboard.length; j++){
                     for(int k = 0; k < keyboard[j].length; k++){
 
-                        //if the current letter in str and answer are equal, sent that letter to green in the keyboard
+                        //if the current letter in str and answer are equal, set that letter to green in the keyboard
                         if(cur.equals(ans)){
                             if(keyboard[j][k].equals(ans))
                                 keyboard[j][k] = green + keyboard[j][k] + reset;
                         }
-                        //if the current letter in str is in answer, but no in the same position set that letter to yellow in keyboard
+                        //if the current letter in str is in answer, but not in the same position set that letter to yellow in keyboard
                         else if(answer.indexOf(cur) != -1){
                             if(keyboard[j][k].equals(cur))
                                 keyboard[j][k] = yellow + keyboard[j][k] + reset;
                         }
+                        //if the current letter of str is not in answer, set that letter to white in keyboard
                         else{
                             if(keyboard[j][k].equals(cur)){
                                 keyboard[j][k] = white + keyboard[j][k] + reset;
@@ -158,7 +178,7 @@ public class Wordle {
             }
     }
 
-
+    //traverses through the keyboard 2d array with two for-each loops and prints it out
     public void printKeyboard(){
         for(String row[] : keyboard){
             for(String str : row)

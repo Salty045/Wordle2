@@ -4,6 +4,7 @@ public class RandWord {
 
     public RandWord(){}
 
+    //Uses a scanner to traverse through the list of valid wordle answers, then stores each valid answer in an ArrayList and returns it
     public ArrayList<String> getWordList() throws FileNotFoundException {
         File answers = new File("wordle-answers-alphabetical.txt");
         Scanner sc = new Scanner(answers);
@@ -17,20 +18,7 @@ public class RandWord {
         return wordList;
     }
 
-    public ArrayList<String> getSpellList() throws FileNotFoundException{
-        File list = new File("words.txt");
-        Scanner sc = new Scanner(list);
-        ArrayList<String> words = new ArrayList<String>();
-
-        while(sc.hasNextLine()){
-            words.add(sc.nextLine());
-        }
-
-        sc.close();
-
-        return words;
-    }
-
+    //Uses a scanner to traverse through the list of valid worldle guesses, then stores each valid guess in an ArrayList and returns it
     public ArrayList<String> getPossibleGuesses() throws FileNotFoundException {
         File guesses = new File("wordle-words.txt");
         Scanner sc = new Scanner(guesses);
@@ -44,11 +32,17 @@ public class RandWord {
         return guessList;
     }
 
+    //returns a string at a random index in the answer ArrayList
     public String getAnswer() throws FileNotFoundException {
         ArrayList<String> answ = getWordList();
         return answ.get((int)(Math.random()*answ.size()));
     }
 
+    /*
+    Recursive binary search through a String ArrayList
+    Returns the index of target in the list
+    Returns -1 if the target is not found in the list
+     */
     public int wordSearch(ArrayList<String> arr, String target, int start, int end){
         int mid = (start+end)/2;
         String mids = arr.get(mid);
