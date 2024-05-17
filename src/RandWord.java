@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 public class RandWord {
 
-    public RandWord(){};
+    public RandWord(){}
 
     public ArrayList<String> getWordList() throws FileNotFoundException {
         File answers = new File("wordle-answers-alphabetical.txt");
@@ -15,6 +15,20 @@ public class RandWord {
         sc.close();
 
         return wordList;
+    }
+
+    public ArrayList<String> getSpellList() throws FileNotFoundException{
+        File list = new File("words.txt");
+        Scanner sc = new Scanner(list);
+        ArrayList<String> words = new ArrayList<String>();
+
+        while(sc.hasNextLine()){
+            words.add(sc.nextLine());
+        }
+
+        sc.close();
+
+        return words;
     }
 
     public ArrayList<String> getPossibleGuesses() throws FileNotFoundException {
