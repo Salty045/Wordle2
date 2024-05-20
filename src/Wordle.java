@@ -114,12 +114,13 @@ public class Wordle {
             return "Guess is invalid, try again";
         }
         attempts++;
-        if(attempts == 6)
-            return "You are out of attempts. The correct answer was " + answer;
-        else if(checkWin(str)){
-            return buildString(str) + "\nCorrect!";
 
-        }
+        if(checkWin(str))
+            return buildString(str) + "\nCorrect!";
+        else if(attempts >= 6)
+            return "You are out of attempts. The correct answer was " + answer;
+
+
         setKeyboard(str);
         printKeyboard();
         return buildString(str);
