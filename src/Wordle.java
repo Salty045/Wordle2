@@ -66,32 +66,33 @@ public class Wordle {
     }
 
     /*
-    Uses StringBuilder to build a string of colors based on 3 conditions in relation to the guess (str) and the answer:
+    Creates a string made up of various colors based on conditions
     Green: Letter in guess equals letter in answer
     Yellow: Letter in guess is in contained in the answer, but not at the same location
     White: Letter is not in the word
-    Returns toString() of the StringBuilder object
+    Returns the colored string
     */
     public String buildString(String str){
 
         str = str.toUpperCase();
-        StringBuilder build = new StringBuilder();
+
+        String str2 = "";
 
         for(int i = 0; i < str.length(); i++){
             char cur = str.charAt(i);
 
             if(cur == answer.charAt(i)){
-                build.append(green + cur +  reset);
+                str2 += green + cur + reset;
             }
             else if(answer.indexOf(cur) != -1){
-                build.append(yellow + cur + reset);
+                str2 += yellow + cur + reset;
             }
             else{
-                build.append(cur);
+                str2 += white + cur + reset;
             }
         }
-        String buildS = build.toString();
-        return buildS;
+
+        return str2;
     }
 
     public boolean isValidGuess(String str){
@@ -156,24 +157,20 @@ public class Wordle {
                 //iterates through the keyboard 2d array
                 for(int j = 0; j < keyboard.length; j++){
                     for(int k = 0; k < keyboard[j].length; k++){
+                        if(keyboard[j][k].equals(cur)){
 
-                        //if the current letter in str and answer are equal, set that letter to green in the keyboard
-                        if(cur.equals(ans)){
-                            if(keyboard[j][k].equals(ans))
+                            //if the current letter in str and answer are equal, set that letter to green in the keyboard
+                            if(cur.equals(ans))
                                 keyboard[j][k] = green + keyboard[j][k] + reset;
-                        }
-                        //if the current letter in str is in answer, but not in the same position set that letter to yellow in keyboard
-                        else if(answer.indexOf(cur) != -1){
-                            if(keyboard[j][k].equals(cur))
-                                keyboard[j][k] = yellow + keyboard[j][k] + reset;
-                        }
-                        //if the current letter of str is not in answer, set that letter to white in keyboard
-                        else{
-                            if(keyboard[j][k].equals(cur)){
-                                keyboard[j][k] = white + keyboard[j][k] + reset;
-                            }
-                        }
 
+                            //if the current letter in str is in answer, but not in the same position set that letter to yellow in keyboard
+                            else if(answer.indexOf(cur) != -1)
+                                keyboard[j][k] = yellow + keyboard[j][k] + reset;
+
+                            //if the current letter of str is not in answer, set that letter to white in keyboard
+                            else
+                                keyboard[j][k] = white + keyboard[j][k] + reset;
+                        }
                     }
                 }
             }
